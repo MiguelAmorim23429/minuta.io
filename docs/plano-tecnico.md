@@ -2,6 +2,33 @@
 
 > Estado: proposta para aprovação. Nenhum código de aplicação foi ainda escrito.
 
+## Âmbito confirmado com a utilizadora
+
+Objetivo: a utilizadora guarda as suas minutas na aplicação; em cada processo escolhe uma minuta,
+junta os documentos (Cartão de Cidadão, caderneta, certidão, DUC…), revê os campos preenchidos e
+obtém o documento pronto a **imprimir ou guardar em PDF**.
+
+| Decisão | Escolha |
+|---|---|
+| Leitura do Cartão de Cidadão | **Digitalização** (PDF frente e verso), não leitor de cartões |
+| Minutas no MVP | **Uma**: escritura de compra e venda. Outras depois, com o mesmo mecanismo |
+| Formato dos documentos de origem | **PDF** (digitalizado ou com texto). Imagens ficam fora do MVP |
+| Resultado | `.docx` preenchido + **PDF** e impressão (via Word instalado) — passa a fazer parte do MVP |
+| Biblioteca de minutas | As minutas preparadas são copiadas para a pasta de dados da aplicação, para ficarem "guardadas lá" |
+
+### O que cada documento pode fornecer
+
+| Documento | Campos | Notas |
+|---|---|---|
+| Cartão de Cidadão (digitalizado) | nome completo, n.º do documento, validade, data de nascimento, filiação, nacionalidade, NIF | A zona MRZ do verso (3 linhas normalizadas, com dígitos de controlo) serve para validar n.º, datas e nome. O nome com acentos vem da frente. NIF validado pelo dígito de controlo. **Não contém estado civil, regime de bens nem morada.** |
+| Caderneta predial | artigo matricial, freguesia, concelho, VPT, descrição/composição | Normalmente PDF com texto (Portal das Finanças) — extração por regras, sem OCR |
+| Certidão permanente | n.º da ficha, inscrições (AP. n.º/data), sujeitos ativos, código de acesso | Normalmente PDF com texto |
+| DUC (IMT, Imposto do Selo) | n.º do DUC, valor, imposto | Normalmente PDF com texto |
+| Outros (estado civil, morada, pagamento, mediadora) | — | Preenchimento manual ou documentos adicionais; assinalados como "em falta" |
+
+Nota a confirmar pela utilizadora: enquadramento legal da digitalização e conservação de cópias do
+Cartão de Cidadão dos clientes.
+
 ## 0. Análise da minuta (escritura de compra e venda, cartório notarial)
 
 O ficheiro analisado não é versionado (contém dados de um caso). Resumo técnico:
@@ -232,11 +259,11 @@ Regras de resolução:
 | Fase | Entrega | Resultado utilizável |
 |---|---|---|
 | **0. Esqueleto** | Tauri + React a arrancar o sidecar Python; `ping` JSON-RPC; lint/testes; scripts de build | App abre e fala com o motor |
-| **1. Minutas** | Importar `.docx`, analisar placeholders, formulário manual, gerar `.docx` numa pasta escolhida | **Preenchimento manual ponta-a-ponta** |
+| **1. Minutas e geração** | Biblioteca de minutas (importar `.docx`, validar placeholders), formulário manual, gerar `.docx` + **PDF** (Word) numa pasta escolhida, abrir para imprimir | **Preenchimento manual ponta-a-ponta, pronto a imprimir** |
 | **2. Processos** | SQLite, criar/listar processos, associar minuta e documentos, histórico de gerados, dashboard | Trabalho organizado por processo |
-| **3. Documentos e OCR** | PDF com texto / PDF digitalizado / imagens; OCR `por` página a página com progresso; visualizar texto por página | Texto extraído localmente |
-| **4. Extração determinística** | Regras para NIF, CC, valores, DUC, artigo matricial, descrição predial, estado civil/regime; validação; conflitos; ecrã de revisão com origem | Sugestões revistas pelo utilizador |
-| 5. Pós-MVP | Exportar PDF (Word COM), instalador com Tesseract incluído, IA opcional, blocos repetidos/condicionais | — |
+| **3. PDFs e OCR** | PDF com texto vs. digitalizado (deteção por página); OCR `por` com progresso; visualizar texto por página | Texto extraído localmente |
+| **4. Extração por tipo de documento** | Classificação do documento + extratores: **Cartão de Cidadão** (frente + MRZ), DUC, caderneta predial, certidão permanente; validações (NIF, MRZ); conflitos; ecrã de revisão com origem | Campos sugeridos e revistos pela utilizadora |
+| 5. Pós-MVP | Outras minutas, instalador com Tesseract incluído, IA opcional, blocos repetidos/condicionais | — |
 
 Cada fase começa com a lista exata de ficheiros que serão criados/alterados, para aprovação.
 
