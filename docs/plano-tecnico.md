@@ -137,7 +137,7 @@ Decisões:
 ## 2. Estrutura de pastas
 
 ```
-minutas-solicitadoria/
+minuta.io/
 ├─ apps/desktop/
 │  ├─ src/                    # React
 │  │  ├─ pages/               # Dashboard, Processo, Documentos, Revisão, Gerar, Histórico
@@ -244,7 +244,7 @@ Regras de resolução:
   pequenos excertos de evidência (a linha onde o valor foi encontrado). **Não guarda o texto OCR
   integral.** O texto OCR fica em memória durante a sessão (decisão a rever se o OCR for demasiado lento).
 - Logs técnicos só com IDs, contagens e tempos — nunca valores, nomes de ficheiro ou excertos.
-- BD e dados em `%APPDATA%\MinutasSolicitadoria`, com ACL do utilizador. Recomendação documentada de
+- BD e dados em `%APPDATA%\minuta.io`, com ACL do utilizador. Recomendação documentada de
   BitLocker e de cópias de segurança (a BD contém dados pessoais).
 - Capabilities do Tauri restringidas a diálogos de ficheiro e às pastas escolhidas.
 - Avisos permanentes no ecrã de revisão e de geração: "Valide todos os dados e o documento final."

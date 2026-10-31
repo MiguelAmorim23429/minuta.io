@@ -1,4 +1,4 @@
-# Minutas Solicitadoria
+# minuta.io
 
 Aplicação desktop (Windows) para preencher minutas jurídicas em Word a partir de documentos
 digitalizados ou PDFs, com processamento local, OCR e revisão humana obrigatória.
