@@ -30,3 +30,5 @@ build/
 Thumbs.db
 .vscode/
 .idea/
+.ruff_cache/
+*.tsbuildinfo
