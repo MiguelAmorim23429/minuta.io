@@ -32,6 +32,7 @@ async fn engine_call(
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let app = tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
             app.manage(EngineState(Engine::spawn().map(Arc::new)));
             Ok(())

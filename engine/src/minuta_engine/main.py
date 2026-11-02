@@ -13,31 +13,47 @@ from typing import Any, TextIO
 
 from pydantic import BaseModel, ValidationError
 
+from minuta_engine.errors import (
+    APP_ERROR,
+    INTERNAL_ERROR,
+    INVALID_PARAMS,
+    INVALID_REQUEST,
+    METHOD_NOT_FOUND,
+    PARSE_ERROR,
+    RpcError,
+    UserError,
+)
 from minuta_engine.logging import get_logger
-from minuta_engine.rpc import system
+from minuta_engine.rpc import documents, system, templates
 
 Handler = Callable[[dict[str, Any]], Any]
 
 METHODS: dict[str, Handler] = {
     "system.ping": system.ping,
     "system.diagnostics": system.diagnostics,
+    "fields.catalog": templates.catalog,
+    "templates.list": templates.list_templates,
+    "templates.import": templates.import_template,
+    "templates.rename": templates.rename_template,
+    "templates.delete": templates.delete_template,
+    "templates.scan": templates.scan_template,
+    "templates.open": templates.open_template,
+    "templates.convert_markers": templates.convert_markers,
+    "templates.fields": templates.template_fields,
+    "documents.generate": documents.generate,
+    "documents.open": documents.open_document,
+    "documents.reveal": documents.reveal_document,
 }
 
-# Códigos de erro definidos pela especificação JSON-RPC 2.0.
-PARSE_ERROR = -32700
-INVALID_REQUEST = -32600
-METHOD_NOT_FOUND = -32601
-INVALID_PARAMS = -32602
-INTERNAL_ERROR = -32603
-
-
-class RpcError(Exception):
-    """Erro a devolver ao cliente. A mensagem é mostrada ao utilizador."""
-
-    def __init__(self, code: int, message: str) -> None:
-        super().__init__(message)
-        self.code = code
-        self.message = message
+__all__ = [
+    "INTERNAL_ERROR",
+    "INVALID_PARAMS",
+    "INVALID_REQUEST",
+    "METHOD_NOT_FOUND",
+    "PARSE_ERROR",
+    "handle_line",
+    "serve",
+]
 
 
 def _error(request_id: Any, code: int, message: str) -> dict[str, Any]:
@@ -47,6 +63,8 @@ def _error(request_id: Any, code: int, message: str) -> dict[str, Any]:
 def _to_json(value: Any) -> Any:
     if isinstance(value, BaseModel):
         return value.model_dump(mode="json")
+    if isinstance(value, list | tuple):
+        return [_to_json(item) for item in value]
     return value
 
 
@@ -80,6 +98,9 @@ def handle_line(line: str) -> dict[str, Any] | None:
     except RpcError as exc:
         log.info("rpc error method=%s code=%s", method, exc.code)
         return _error(request_id, exc.code, exc.message)
+    except UserError as exc:
+        log.info("rpc user_error method=%s", method)
+        return _error(request_id, APP_ERROR, exc.message)
     except ValidationError:
         log.info("rpc invalid_params method=%s", method)
         return _error(request_id, INVALID_PARAMS, "Parâmetros inválidos.")

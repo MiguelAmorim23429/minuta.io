@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Permissões mínimas da janela principal. Diálogos e acesso a ficheiros são acrescentados na Fase 1, restritos ao necessário.",
+  "description": "Permissões mínimas da janela principal: núcleo e diálogo para escolher ficheiros/pastas. A leitura e escrita de ficheiros é feita pelo motor, não pela interface.",
   "windows": ["main"],
-  "permissions": ["core:default"]
+  "permissions": ["core:default", "dialog:allow-open"]
 }

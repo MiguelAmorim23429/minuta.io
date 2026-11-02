@@ -1,1 +1,1 @@
-{"default":{"identifier":"default","description":"Permissões mínimas da janela principal. Diálogos e acesso a ficheiros são acrescentados na Fase 1, restritos ao necessário.","local":true,"windows":["main"],"permissions":["core:default"]}}
+{"default":{"identifier":"default","description":"Permissões mínimas da janela principal: núcleo e diálogo para escolher ficheiros/pastas. A leitura e escrita de ficheiros é feita pelo motor, não pela interface.","local":true,"windows":["main"],"permissions":["core:default","dialog:allow-open"]}}

@@ -1,8 +1,6 @@
 import io
 import json
 
-import pytest
-
 from minuta_engine import __version__, tools
 from minuta_engine.main import (
     INVALID_PARAMS,
@@ -12,11 +10,6 @@ from minuta_engine.main import (
     handle_line,
     serve,
 )
-
-
-@pytest.fixture(autouse=True)
-def _isolated_data_dir(tmp_path, monkeypatch):
-    monkeypatch.setenv("MINUTA_DATA_DIR", str(tmp_path))
 
 
 def _request(method: str, params: object = None, request_id: object = 1) -> str:

@@ -1,0 +1,106 @@
+# Catálogo de campos da escritura de compra e venda.
+#
+# Cada campo corresponde a um placeholder {{ key }} na minuta. Os campos da minuta que não
+# constem aqui continuam a funcionar (aparecem no grupo "Outros campos" como texto livre).
+#
+# Tipos: text (por defeito), multiline, nif, money, date.
+# Nomes: snake_case, sem acentos. Partes numeradas: comprador_1_..., gerente_2_...
+
+groups:
+  - id: ato
+    label: Ato
+    fields:
+      - { key: data_ato_extenso, label: "Data do ato (por extenso)" }
+      - { key: livro, label: "Livro" }
+      - { key: folhas, label: "Folhas" }
+
+  - id: vendedora
+    label: Vendedora (sociedade)
+    fields:
+      - { key: vendedora_firma, label: "Firma" }
+      - { key: vendedora_nipc, label: "NIPC", type: nif }
+      - { key: vendedora_sede, label: "Sede", type: multiline }
+      - { key: vendedora_matricula, label: "Matrícula na Conservatória do Registo Comercial" }
+
+  - id: gerente_1
+    label: Sócio-gerente 1
+    fields:
+      - { key: gerente_1_nome, label: "Nome completo" }
+      - { key: gerente_1_estado_civil, label: "Estado civil" }
+      - { key: gerente_1_regime_bens, label: "Regime de bens" }
+      - { key: gerente_1_conjuge, label: "Cônjuge" }
+      - { key: gerente_1_naturalidade, label: "Naturalidade" }
+      - { key: gerente_1_morada, label: "Morada", type: multiline }
+      - { key: gerente_1_nif, label: "NIF", type: nif }
+      - { key: gerente_1_cc, label: "N.º do Cartão de Cidadão" }
+      - { key: gerente_1_cc_validade, label: "Validade do Cartão de Cidadão", type: date }
+
+  - id: gerente_2
+    label: Sócio-gerente 2
+    fields:
+      - { key: gerente_2_nome, label: "Nome completo" }
+      - { key: gerente_2_estado_civil, label: "Estado civil" }
+      - { key: gerente_2_regime_bens, label: "Regime de bens" }
+      - { key: gerente_2_conjuge, label: "Cônjuge" }
+      - { key: gerente_2_naturalidade, label: "Naturalidade" }
+      - { key: gerente_2_morada, label: "Morada", type: multiline }
+      - { key: gerente_2_nif, label: "NIF", type: nif }
+      - { key: gerente_2_cc, label: "N.º do Cartão de Cidadão" }
+      - { key: gerente_2_cc_validade, label: "Validade do Cartão de Cidadão", type: date }
+
+  - id: comprador_1
+    label: Comprador(a) 1
+    fields:
+      - { key: comprador_1_nome, label: "Nome completo" }
+      - { key: comprador_1_estado_civil, label: "Estado civil" }
+      - { key: comprador_1_regime_bens, label: "Regime de bens" }
+      - { key: comprador_1_conjuge, label: "Cônjuge" }
+      - { key: comprador_1_naturalidade, label: "Naturalidade" }
+      - { key: comprador_1_morada, label: "Morada", type: multiline }
+      - { key: comprador_1_nif, label: "NIF", type: nif }
+      - { key: comprador_1_cc, label: "N.º do Cartão de Cidadão" }
+      - { key: comprador_1_cc_validade, label: "Validade do Cartão de Cidadão", type: date }
+
+  - id: preco
+    label: Preço e pagamento
+    fields:
+      - { key: preco, label: "Preço (em algarismos)", type: money }
+      - { key: preco_extenso, label: "Preço (por extenso)" }
+      - { key: pagamento_meio, label: "Meio de pagamento", type: multiline }
+
+  - id: imovel
+    label: Imóvel
+    fields:
+      - { key: imovel_descricao, label: "Descrição do imóvel", type: multiline }
+      - { key: imovel_freguesia, label: "Freguesia" }
+      - { key: imovel_concelho, label: "Concelho" }
+      - { key: predial_ficha, label: "Descrição predial (ficha n.º)" }
+      - { key: predial_inscricao_aquisicao, label: "Inscrição da aquisição (AP. n.º e data)" }
+      - { key: matriz_artigo, label: "Artigo matricial" }
+      - { key: imovel_vpt, label: "Valor patrimonial tributário", type: money }
+      - { key: loteamento_registo, label: "Registo do loteamento (AP.)" }
+
+  - id: mediacao
+    label: Mediação imobiliária
+    fields:
+      - { key: mediadora, label: "Mediadora (nome e licença AMI)" }
+
+  - id: titulo_urbanistico
+    label: Título urbanístico
+    fields:
+      - { key: alvara_numero, label: "Alvará n.º" }
+      - { key: alvara_emissao, label: "Emissão do alvará (data e entidade)" }
+
+  - id: impostos
+    label: Impostos (DUC)
+    fields:
+      - { key: duc_is_numero, label: "DUC Imposto do Selo (verba 1.1 TGIS) — n.º" }
+      - { key: duc_is_valor, label: "DUC Imposto do Selo — valor", type: money }
+      - { key: duc_imt_numero, label: "DUC IMT — n.º" }
+      - { key: duc_imt_valor, label: "DUC IMT — valor", type: money }
+
+  - id: exibidos
+    label: Documentos exibidos
+    fields:
+      - { key: certidao_codigo_acesso, label: "Código de acesso da certidão permanente" }
+      - { key: caderneta_data, label: "Data de obtenção da caderneta predial", type: date }

@@ -9,6 +9,9 @@ description = "Motor local do minuta.io: minutas, OCR e extração de dados."
 requires-python = ">=3.12"
 dependencies = [
     "pydantic>=2.9,<3",
+    "docxtpl>=0.19,<1",
+    "pyyaml>=6,<7",
+    "pywin32>=306; sys_platform == 'win32'",
 ]
 
 [project.optional-dependencies]
@@ -29,4 +32,7 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "tests"]
+# O faulthandler mostra exceções internas do COM (0x800706BA/BE) ao fechar o Word, que são
+# tratadas pelo Windows e não representam falhas.
+addopts = "-p no:faulthandler"
